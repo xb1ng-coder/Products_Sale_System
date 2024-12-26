@@ -19,10 +19,10 @@ public class ProductService {
         return productDao.searchProducts(keyword);
     }
 
-//    // 根据商品ID获取商品
-//    public Product getProductById(int productId) {
-//        return productDao.getProductById(productId);
-//    }
+    // 根据商品ID获取商品
+    public Product getProductById(int productId) {
+        return productDao.getProductById(productId);
+    }
 //
 //    // 添加新商品
 //    public boolean addProduct(Product product) {

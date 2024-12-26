@@ -53,4 +53,15 @@
         <servlet-name>ProductController</servlet-name>
         <url-pattern>/product</url-pattern>  <!-- 访问URL的前缀 -->
     </servlet-mapping>
+
+    <!-- 配置CartController的Servlet -->
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>controller.CartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+
 </web-app>

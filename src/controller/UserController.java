@@ -14,6 +14,8 @@ public class UserController extends HttpServlet {
 
     // 处理用户Post请求
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
         if ("register".equals(action)) {
@@ -25,6 +27,7 @@ public class UserController extends HttpServlet {
 
     // 处理用户注册
     private void doPostregister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         // 获取请求参数
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -55,10 +58,11 @@ public class UserController extends HttpServlet {
         String password = request.getParameter("password");
 
         // 调用UserService进行登录验证
-        boolean success = userService.loginUser(username, password);
-        if (success) {
+        int userId = userService.loginUser(username, password);
+        if (userId > 0) {
             HttpSession session = request.getSession();
-            session.setAttribute("username", username);  // 设置登录用户到session中
+            session.setAttribute("userId", userId);  // 设置登录用户Id到session中
+            session.setAttribute("userName", username);  // 设置登录用户Id到session中
             response.sendRedirect("/MainView/index.jsp");  // 登录成功，跳转到首页
         } else {
             request.setAttribute("errorMessage", "用户名或密码错误！");

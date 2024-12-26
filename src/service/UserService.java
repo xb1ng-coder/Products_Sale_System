@@ -20,15 +20,15 @@ public class UserService {
     }
 
     // 用户登录
-    public boolean loginUser(String username, String password) {
+    public int loginUser(String username, String password) {
         // 通过用户名查找用户
         User user = userDao.getUserByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             // 用户名存在并且密码匹配
-            return true;
+            return user.getUserId();
         }
         // 用户名或密码错误
-        return false;
+        return 0;
     }
 
     // 更新用户信息

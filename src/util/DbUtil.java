@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbUtil {
-    private static final String URL = "jdbc:mysql://localhost:3307/products_sale_db";
+    private static final String URL = "jdbc:mysql://localhost:3307/products_sale_db?useUnicode=true&characterEncoding=UTF-8";
     private static final String USER = "root";
     private static final String PASSWORD = "yxb141242";  // 请替换为你的数据库密码
 

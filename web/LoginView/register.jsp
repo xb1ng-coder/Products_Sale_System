@@ -14,6 +14,7 @@
 
     <%-- 显示错误信息 --%>
     <%
+        request.setCharacterEncoding("utf-8");
         if(request.getParameter("error") != null) {
     %>
     <p class="error-message">错误：<%= request.getParameter("error") %></p>
