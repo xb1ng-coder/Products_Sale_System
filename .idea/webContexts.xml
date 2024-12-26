@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/web/Stu_Study_sys/student_plat/main.jsp" value="file://$PROJECT_DIR$/web/Stu_Study_sys/student_plat" />
+        <entry key="file://$PROJECT_DIR$/web/Stu_Study_sys/teacher_plat/delete_student.jsp" value="file://$PROJECT_DIR$/web/Stu_Study_sys/teacher_plat" />
+        <entry key="file://$PROJECT_DIR$/web/Stu_Study_sys/teacher_plat/update_student.jsp" value="file://$PROJECT_DIR$/web/Stu_Study_sys/teacher_plat" />
+        <entry key="file://$PROJECT_DIR$/web/Vote_sys/login.jsp" value="file://$PROJECT_DIR$/web/Vote_sys" />
+        <entry key="file://$PROJECT_DIR$/web/Vote_sys/main.jsp" value="file://$PROJECT_DIR$/web/Vote_sys" />
+        <entry key="file://$PROJECT_DIR$/web/WEB-INF/StudentInfo_sys/Student_sys.jsp" value="file://$PROJECT_DIR$/web/WEB-INF/StudentInfo_sys" />
+        <entry key="file://$PROJECT_DIR$/web/WEB-INF/StudentInfo_sys/inset_stu_1.jsp" value="file://$PROJECT_DIR$/web/WEB-INF/StudentInfo_sys" />
+        <entry key="file://$PROJECT_DIR$/web/curriculum.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/del_stu_2.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/insert_stu_2.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/mod_stu_1.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/showcurriculum.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/studentinfo.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/time.jsp" value="file://$PROJECT_DIR$/web" />
+      </map>
+    </option>
+  </component>
+</project>

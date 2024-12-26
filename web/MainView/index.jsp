@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>商品浏览</title>
+  <title>商品销售系统</title>
 </head>
 <body>
 <!-- 头部 -->
@@ -16,7 +16,7 @@
   <nav>
     <ul>
       <li><a href="index.jsp">首页</a></li>
-      <li id="login-link"><a href="login.jsp">登录</a></li>
+      <li id="login-link"><a href="/LoginView/login.jsp">登录</a></li>
       <li id="cart-link" style="display:none;"><a href="cart.jsp">购物车</a></li>
       <li id="order-link" style="display:none;"><a href="orders.jsp">订单</a></li>
       <li id="profile-link" style="display:none;"><a href="profile.jsp">个人设置</a></li>
