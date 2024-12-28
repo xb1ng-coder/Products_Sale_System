@@ -1,7 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="service.OrderService" %>
 <%@ page import="bean.Order" %>
 <%@ page import="bean.OrderItem" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -9,21 +10,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>订单详情</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 20px;
     }
     table, th, td {
-      border: 1px solid black;
+      border: 1px solid #ddd;
     }
     th, td {
-      padding: 8px;
+      padding: 12px;
       text-align: left;
     }
     th {
-      background-color: #f2f2f2;
+      background-color: #f4f4f4;
+    }
+    tr:hover {
+      background-color: #f9f9f9;
     }
     h2 {
+      text-align: center;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: #007BFF;
+      margin-right: 15px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
       text-align: center;
     }
   </style>
@@ -34,17 +57,18 @@
 <a href="orders.jsp">返回订单列表</a>
 
 <%
-  // 获取订单ID
   String orderIdParam = request.getParameter("orderId");
   if (orderIdParam == null) {
-    out.println("<p>无效的订单ID。</p>");
-  } else {
-    try {
-      int orderId = Integer.parseInt(orderIdParam);
-      OrderService orderService = new OrderService();
-      Order order = orderService.getOrderById(orderId);
+%>
+<p class="error">无效的订单ID。</p>
+<%
+} else {
+  try {
+    int orderId = Integer.parseInt(orderIdParam);
+    OrderService orderService = new OrderService();
+    Order order = orderService.getOrderById(orderId);
 
-      if (order != null) {
+    if (order != null) {
 %>
 
 <h3>订单信息</h3>
@@ -88,15 +112,23 @@
   </thead>
   <tbody>
   <%
-    // 将此OrderId传递给OrderItemService以获取订单项列表
-    for (OrderItem item : order.getOrderItems()) {
+    List<OrderItem> orderItems = order.getOrderItems();
+    if (orderItems != null) {
+      for (OrderItem item : orderItems) {
   %>
   <tr>
     <td><%= item.getProductId() %></td>
     <td><%= item.getName() %></td>
     <td><%= item.getQuantity() %></td>
     <td>¥<%= item.getUnitPrice() %></td>
-    <td>¥<%= item.getQuantity() * item.getUnitPrice()  %></td>
+    <td>¥<%= item.getQuantity() * item.getUnitPrice() %></td>
+  </tr>
+  <%
+    }
+  } else {
+  %>
+  <tr>
+    <td colspan="5" class="error">此订单没有商品。</td>
   </tr>
   <%
     }
@@ -105,11 +137,15 @@
 </table>
 
 <%
-      } else {
-        out.println("<p>未找到对应的订单。</p>");
-      }
-    } catch (NumberFormatException e) {
-      out.println("<p>订单ID无效。</p>");
+} else {
+%>
+<p class="error">未找到对应的订单。</p>
+<%
+  }
+} catch (Exception e) {
+%>
+<p class="error">加载订单时出错，请稍后重试。</p>
+<%
     }
   }
 %>
