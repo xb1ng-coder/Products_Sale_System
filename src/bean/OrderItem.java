@@ -3,6 +3,7 @@ package bean;
 public class OrderItem {
     private int orderItemId;  // 订单项ID
     private int productId;    // 商品ID
+    private String name;      // 订单ID
     private int quantity;     // 商品数量
     private double unitPrice; // 商品单价
 
@@ -10,9 +11,10 @@ public class OrderItem {
     public OrderItem() {}
 
     // 带参构造函数
-    public OrderItem(int orderItemId, int productId, int quantity, double unitPrice) {
+    public OrderItem(int orderItemId, int productId, int quantity, String name, double unitPrice) {
         this.orderItemId = orderItemId;
         this.productId = productId;
+        this.name = name;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
@@ -32,6 +34,14 @@ public class OrderItem {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getQuantity() {

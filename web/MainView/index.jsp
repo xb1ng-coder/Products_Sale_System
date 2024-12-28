@@ -9,6 +9,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>商品销售系统</title>
+  <script>
+    function checkLogin() {
+      alert("请先登录后再添加商品至购物车！");
+      window.location.href = "/LoginView/login.jsp";
+    }
+  </script>
 </head>
 <body>
 <!-- 头部 -->
@@ -16,26 +22,24 @@
   <nav>
     <ul>
       <%
-        request.setCharacterEncoding("utf-8");
         // 获取当前会话中的用户信息
-        // int userId = (int) session.getAttribute("userId");
         String userName = (String) session.getAttribute("userName");
 
         // 用户未登录时
         if (userName == null) {
-
-        %>
-        <li id="login-link"><a href="/LoginView/login.jsp">登录</a></li>
-        <%
-        } else {
-          // 用户已登录
-          %>
-          <li><span>欢迎光临！<%= userName %></span></li>
-          <li id="cart-link"><a href="/MainView/cart.jsp">购物车</a></li>
-          <li id="order-link"><a href="orders.jsp">订单</a></li>
-          <li id="profile-link"><a href="profile.jsp">个人设置</a></li>
-<%--          <li id="logout-link" style="display:none;"><a href="logout.jsp">退出</a></li>--%>
-        <% } %>
+      %>
+      <li id="login-link"><a href="/LoginView/login.jsp">登录</a></li>
+      <%
+      } else {
+      %>
+      <li><span>欢迎光临！<%= userName %></span></li>
+      <li id="cart-link"><a href="/MainView/cart.jsp">购物车</a></li>
+      <li id="order-link"><a href="orders.jsp">订单</a></li>
+      <li id="profile-link"><a href="profile.jsp">个人设置</a></li>
+      <li id="logout-link"><a href="/LoginView/logout.jsp">退出登录</a></li>
+      <%
+        }
+      %>
     </ul>
   </nav>
 </header>
@@ -46,7 +50,6 @@
   <div id="products-container">
     <%
       // 获取商品列表
-      // List<Product> productList = (List<Product>) request.getAttribute("productList");
       ProductService productService = new ProductService();
       List<Product> productList = productService.getAllProducts();
       if (productList != null) {
@@ -57,7 +60,11 @@
       <h3><%= product.getName() %></h3>
       <p>价格: ¥<%= product.getPrice() %></p>
       <p>库存：<%= product.getStockQuantity() %>(单位：个)</p>
-      <a href="product?action=detail&id=<%= product.getProductId() %>">查看详情</a>
+      <p>描述：<%= product.getDescription() %></p>
+      <%
+        // 检查用户是否已登录
+        if (userName != null) {
+      %>
       <form action="/cart?action=add" method="POST">
         <input type="hidden" name="productId" value="<%= product.getProductId() %>">
         <input type="hidden" name="productName" value="<%= product.getName() %>">
@@ -65,6 +72,13 @@
         <input type="number" name="quantity" value="1" max="<%= product.getStockQuantity() %>">
         <button type="submit">加入购物车</button>
       </form>
+      <%
+      } else {
+      %>
+      <button onclick="checkLogin()">加入购物车</button>
+      <%
+        }
+      %>
     </div>
     <%
         }

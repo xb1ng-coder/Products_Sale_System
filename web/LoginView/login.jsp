@@ -21,7 +21,7 @@
     <input type="submit" value="登录">
   </form>
 
-  <p>没有账号？<a href="register.jsp">注册</a></p>
+  <p>没有账号？<a href="register.jsp">注册</a>|<a href="/MainView/index.jsp">游客登录</a></p>
 </div>
 
 </body>

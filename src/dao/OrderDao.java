@@ -40,7 +40,7 @@ public class OrderDao {
 
     // 添加订单项
     private void addOrderItems(Order order) {
-        String sql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO order_items (order_id, product_id, quantity, price, name) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             for (OrderItem item : order.getOrderItems()) {
@@ -48,6 +48,7 @@ public class OrderDao {
                 ps.setInt(2, item.getProductId());
                 ps.setInt(3, item.getQuantity());
                 ps.setDouble(4, item.getUnitPrice());
+                ps.setString(5, item.getName());
                 ps.addBatch();  // 使用批处理一次插入多个订单项
             }
             ps.executeBatch();
@@ -102,9 +103,8 @@ public class OrderDao {
                 order.setStatus(rs.getString("status"));
                 order.setShippingAddress(rs.getString("shipping_address"));
                 order.setPhoneNumber(rs.getString("phone_number"));
-
                 // 查询订单项
-                order.setOrderItems(getOrderItems(orderId));
+                order.setOrderItems(getOrderItemsByOrderId(orderId));
 
                 return order;
             }
@@ -133,7 +133,7 @@ public class OrderDao {
                 order.setPhoneNumber(rs.getString("phone_number"));
 
                 // 查询订单项
-                order.setOrderItems(getOrderItems(order.getOrderId()));
+                order.setOrderItems(getOrderItemsByOrderId(order.getOrderId()));
 
                 orders.add(order);
             }
@@ -144,8 +144,8 @@ public class OrderDao {
     }
 
     // 查询订单项
-    private List<OrderItem> getOrderItems(int orderId) {
-        List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> getOrderItemsByOrderId(int orderId) {
+        List<OrderItem> orderItemsList = new ArrayList<>();
         String sql = "SELECT * FROM order_items WHERE order_id = ?";
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -153,16 +153,17 @@ public class OrderDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 OrderItem orderItem = new OrderItem();
-                orderItem.setOrderItemId(rs.getInt("order_item_id"));
+                orderItem.setOrderItemId(rs.getInt("item_id"));
                 orderItem.setProductId(rs.getInt("product_id"));
                 orderItem.setQuantity(rs.getInt("quantity"));
-                orderItem.setUnitPrice(rs.getDouble("unit_price"));
-                orderItems.add(orderItem);
+                orderItem.setName(rs.getString("name"));
+                orderItem.setUnitPrice(rs.getDouble("price"));
+                orderItemsList.add(orderItem);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return orderItems;
+        return orderItemsList;
     }
 
     // 更新订单状态

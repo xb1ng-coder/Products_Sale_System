@@ -27,6 +27,7 @@ public class CartController extends HttpServlet {
 
     // 处理购物车增加
     private void doPostadd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         // 获取请求参数
         int productId = Integer.parseInt(request.getParameter("productId"));
 //        int productName = Integer.parseInt(request.getParameter("productName"));
@@ -53,7 +54,7 @@ public class CartController extends HttpServlet {
 
     // 处理提交订单
     private void doPostSubmitOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String shippingAddress = request.getParameter("shippingAddress");
         String phoneNumber = request.getParameter("phoneNumber");
@@ -75,7 +76,7 @@ public class CartController extends HttpServlet {
             // 将购物车中的每个商品添加到订单中
             for (CartItem item : cart.getItems().values()) {
                 OrderItem orderItem = new OrderItem();
-                // 少一个商品名到订单项名中
+                orderItem.setName(item.getProduct().getName());
                 orderItem.setProductId(item.getProduct().getProductId());
                 orderItem.setQuantity(item.getQuantity());
                 orderItem.setUnitPrice(item.getProduct().getPrice());

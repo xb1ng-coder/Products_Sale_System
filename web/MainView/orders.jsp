@@ -57,6 +57,8 @@
         <th>订单日期</th>
         <th>商品数量</th>
         <th>总金额</th>
+        <th>邮寄地址</th>
+        <th>联系电话</th>
         <th>订单状态</th>
         <th>操作</th>
     </tr>
@@ -71,8 +73,10 @@
         <td><%= order.getOrderDate() %></td>
         <td><%= orderItems.size() %></td>
         <td>¥<%= order.getTotalAmount() %></td>
+        <td><%= order.getShippingAddress() %></td>
+        <td><%= order.getPhoneNumber() %></td>
         <td><%= order.getStatus() %></td>
-        <td><a href="orderDetail.jsp?orderId=<%= order.getOrderId() %>">查看详情</a></td>
+        <td><a href="order_detail.jsp?orderId=<%= order.getOrderId() %>">查看详情</a></td>
     </tr>
     <%
         }

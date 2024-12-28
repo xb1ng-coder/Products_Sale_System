@@ -35,6 +35,8 @@ public class OrderService {
         return orderDao.getAllOrders();
     }
 
+    // 获取某个订单的所有订单项
+
     // 获取某个用户的所有订单
     public List<Order> getOrdersByUserId(int userId) {
         return orderDao.getOrdersByUserId(userId);

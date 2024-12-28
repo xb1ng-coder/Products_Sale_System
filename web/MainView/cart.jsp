@@ -16,7 +16,6 @@
 <a href="index.jsp">回到首页</a>
 
 <%
-    request.setCharacterEncoding("utf-8");
     // 获取购物车
     Cart cart = (Cart) session.getAttribute("cart");
     if (cart != null) {
@@ -29,7 +28,6 @@
         <th>总价</th>
     </tr>
     <%
-        request.setCharacterEncoding("utf-8");
         // 获取购物车中的商品
         Map<Integer, CartItem> items = cart.getItems();
         for (CartItem item : items.values()) {
