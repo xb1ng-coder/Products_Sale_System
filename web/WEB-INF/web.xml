@@ -24,15 +24,15 @@
 <!--        <url-pattern>/admin/*</url-pattern>-->
 <!--    </servlet-mapping>-->
 
-<!--    &lt;!&ndash; 配置 OrderController Servlet &ndash;&gt;-->
-<!--    <servlet>-->
-<!--        <servlet-name>OrderController</servlet-name>-->
-<!--        <servlet-class>controller.OrderController</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>OrderController</servlet-name>-->
-<!--        <url-pattern>/order/*</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <!-- 配置 OrderController Servlet -->
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>controller.OrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
 
 <!--    &lt;!&ndash; 配置 GuestController Servlet &ndash;&gt;-->
 <!--    <servlet>-->

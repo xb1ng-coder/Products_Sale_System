@@ -72,13 +72,13 @@ public class OrderDao {
 
             while (rs.next()) {
                 Order order = new Order();
-                order.setOrderId(rs.getInt("orderId"));
-                order.setUserId(rs.getInt("userId"));
-                order.setOrderDate(rs.getDate("orderDate"));
-                order.setTotalAmount(rs.getDouble("totalAmount"));
+                order.setOrderId(rs.getInt("order_id"));
+                order.setUserId(rs.getInt("user_id"));
+                order.setOrderDate(rs.getDate("order_date"));
+                order.setTotalAmount(rs.getDouble("total_amount"));
                 order.setStatus(rs.getString("status"));
-                order.setShippingAddress(rs.getString("shippingAddress"));
-                order.setPhoneNumber(rs.getString("phoneNumber"));
+                order.setShippingAddress(rs.getString("shipping_address"));
+                order.setPhoneNumber(rs.getString("phone_number"));
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class OrderDao {
     }
 
     // 查询订单项
-    private List<OrderItem> getOrderItemsByOrderId(int orderId) {
+    public List<OrderItem> getOrderItemsByOrderId(int orderId) {
         List<OrderItem> orderItemsList = new ArrayList<>();
         String sql = "SELECT * FROM order_items WHERE order_id = ?";
         try (Connection conn = DbUtil.getConnection();

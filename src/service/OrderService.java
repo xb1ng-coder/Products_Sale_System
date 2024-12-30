@@ -60,5 +60,11 @@ public class OrderService {
         }
         return false;
     }
+
+    // 查询订单项
+    public List<OrderItem> getOrderItemsByOrderId(int orderId) {
+        OrderDao orderDao = new OrderDao();
+        return orderDao.getOrderItemsByOrderId(orderId);
+    }
 }
 

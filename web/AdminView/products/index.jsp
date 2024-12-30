@@ -60,7 +60,7 @@
     <div class="nav-links">
         <a href="products_list.jsp" target="products_frame">商品信息列表</a>
         <a href="products_add.jsp" target="products_frame">增加商品信息</a>
-        <a href="products_update.jsp" target="products_frame">修改商品信息</a>
+<%--        <a href="products_update.jsp" target="products_frame">修改商品信息</a>--%>
     </div>
 </div>
 
