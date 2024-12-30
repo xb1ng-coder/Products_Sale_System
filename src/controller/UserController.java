@@ -63,7 +63,13 @@ public class UserController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("userId", userId);  // 设置登录用户Id到session中
             session.setAttribute("userName", username);  // 设置登录用户Id到session中
-            response.sendRedirect("/MainView/index.jsp");  // 登录成功，跳转到首页
+            // 登录成功后，进行用户身份验证
+            User user = userService.getUserById(userId);
+            if (Objects.equals(user.getRole(), "admin")) {
+                response.sendRedirect("/AdminView/index.jsp");  // 管理员登录成功，跳转到管理员页面
+            } else if (Objects.equals(user.getRole(), "user")) {
+                response.sendRedirect("/MainView/index.jsp");  // 登录成功，跳转到网站首页
+            }
         } else {
             request.setAttribute("errorMessage", "用户名或密码错误！");
             request.getRequestDispatcher("/LoginView/login_fail.jsp").forward(request, response);  // 登录失败，返回登录页面

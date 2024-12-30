@@ -95,7 +95,7 @@
     }
 
     .product-image {
-      max-width: 100%;
+      width: 225px;
       height: auto;
       border-radius: 8px;
       margin-bottom: 10px;

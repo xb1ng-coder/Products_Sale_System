@@ -23,34 +23,34 @@ public class ProductService {
     public Product getProductById(int productId) {
         return productDao.getProductById(productId);
     }
-//
-//    // 添加新商品
-//    public boolean addProduct(Product product) {
-//        // 可以根据需求验证商品信息
-//        if (product != null && product.getName() != null && !product.getName().isEmpty()) {
-//            return productDao.addProduct(product);
-//        }
-//        return false;
-//    }
-//
-//    // 更新商品信息
-//    public boolean updateProduct(Product product) {
-//        // 根据需求可以加入其他的验证逻辑
-//        if (product != null && product.getProductId() > 0) {
-//            return productDao.updateProduct(product);
-//        }
-//        return false;
-//    }
-//
-//    // 删除商品
-//    public boolean deleteProduct(int productId) {
-//        // 确保商品存在后才能删除
-//        Product product = productDao.getProductById(productId);
-//        if (product != null) {
-//            return productDao.deleteProduct(productId);
-//        }
-//        return false;
-//    }
+
+    // 添加新商品
+    public boolean addProduct(Product product) {
+        // 可以根据需求验证商品信息
+        if (product != null && product.getName() != null && !product.getName().isEmpty()) {
+            return productDao.addProduct(product);
+        }
+        return false;
+    }
+
+    // 更新商品信息
+    public boolean updateProduct(Product product) {
+        // 根据需求可以加入其他的验证逻辑
+        if (product != null && product.getProductId() > 0) {
+            return productDao.updateProduct(product);
+        }
+        return false;
+    }
+
+    // 删除商品
+    public boolean deleteProduct(int productId) {
+        // 确保商品存在后才能删除
+        Product product = productDao.getProductById(productId);
+        if (product != null) {
+            return productDao.deleteProduct(productId);
+        }
+        return false;
+    }
 //
 //    // 根据分类获取商品
 //    public List<Product> getProductsByCategory(String category) {
