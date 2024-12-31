@@ -160,4 +160,64 @@ public class ProductDao {
             return false;
         }
     }
+
+    public List<Product> searchAndFilterProducts(String searchKeyword, String category) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE 1=1"; // 基础查询，始终成立的条件
+
+// 动态构建查询条件
+        if (searchKeyword != null) {
+            sql += " AND name LIKE ?";
+        }
+        if (category != null && !category.equals("all")) {
+            sql += " AND category = ?";
+        }
+
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            int index = 1;
+            if (searchKeyword != null) {
+                stmt.setString(index++, "%" + searchKeyword + "%");
+            }
+            if (category != null && !category.equals("all")) {
+                stmt.setString(index++, category);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                products.add(new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock_quantity"),
+                        rs.getString("category"),
+                        rs.getString("image_url")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+
+    }
+
+    public List<String> getAllCategories() {
+        List<String> categories = new ArrayList<>();
+        String sql = "SELECT DISTINCT category FROM products";
+
+        try (Connection conn = DbUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                categories.add(rs.getString("category"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
 }

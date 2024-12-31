@@ -51,6 +51,28 @@ public class ProductService {
         }
         return false;
     }
+
+    public List<Product> searchAndFilterProducts(String searchKeyword, String category) {
+        ProductDao productDao = new ProductDao();
+        if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
+            searchKeyword = null;
+        }
+        if (category == null || category.trim().isEmpty()) {
+            category = null;
+        }
+        return productDao.searchAndFilterProducts(searchKeyword, category);
+    }
+
+    public List<String> getAllCategories() {
+        ProductDao productDao = new ProductDao();
+        return productDao.getAllCategories();
+    }
+
+    public List<Product> getFilteredProducts(String searchKeyword, String category) {
+        ProductDao productDao = new ProductDao();
+        return productDao.searchAndFilterProducts(searchKeyword, category);
+    }
+
 //
 //    // 根据分类获取商品
 //    public List<Product> getProductsByCategory(String category) {

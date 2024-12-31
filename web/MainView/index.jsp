@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>商品销售系统</title>
   <style>
-    /* 通用样式 */
     * {
       margin: 0;
       padding: 0;
@@ -154,7 +153,50 @@
       cursor: not-allowed;
     }
 
-    /* 响应式设计 */
+    .filter-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .filter-form input[type="text"],
+    .filter-form select {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      width: 250px;
+      max-width: 100%;
+    }
+
+    .filter-form button {
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .filter-form button:hover {
+      background-color: #0056b3;
+    }
+
+    /* 响应式设计优化 */
+    @media (max-width: 768px) {
+      .filter-form input[type="text"],
+      .filter-form select {
+        width: 100%;
+      }
+
+      .filter-form button {
+        width: 100%;
+      }
+    }
     @media (max-width: 768px) {
       .product-card {
         width: calc(50% - 20px);
@@ -208,6 +250,7 @@
     <div class="nav-links">
       <ul>
         <%
+          request.setCharacterEncoding("UTF-8");
           String userName = (String) session.getAttribute("userName");
           String role = (String) session.getAttribute("role");
           if (userName == null) {
@@ -240,18 +283,51 @@
 
 <!-- 商品展示 -->
 <main class="main-content">
+
+  <!-- 筛选表单 -->
+  <form method="POST" action="index.jsp" class="filter-form">
+    <input type="text" name="searchKeyword" placeholder="输入商品名搜索" value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
+    <select name="category">
+      <option value="all">全部分类</option>
+      <%
+        // 动态加载分类
+        ProductService productService = new ProductService();
+        List<String> categories = productService.getAllCategories();
+        String selectedCategory = request.getParameter("category");
+        for (String cat : categories) {
+      %>
+      <option value="<%= cat %>" <%= (selectedCategory != null && cat.equals(selectedCategory)) ? "selected" : "" %>><%= cat %></option>
+      <%
+        }
+      %>
+    </select>
+    <button type="submit" class="btn btn-primary">筛选</button>
+  </form>
+
   <section class="product-section">
     <h2>商品列表</h2>
     <div class="product-list">
       <%
-        ProductService productService = new ProductService();
-        List<Product> productList = productService.getAllProducts();
+        // 获取请求参数，使用 POST 数据
+        String searchKeyword = request.getParameter("searchKeyword");
+        String category = request.getParameter("category");
+
+        // 调用后端逻辑，根据条件获取商品列表
+        List<Product> productList;
+        if (searchKeyword == null && (category == null || category.equals("all"))) {
+          // 如果没有筛选条件，则返回全部商品
+          productList = productService.getAllProducts();
+        } else {
+          // 根据筛选条件查询商品
+          productList = productService.getFilteredProducts(searchKeyword, category);
+        }
         if (productList != null) {
           for (Product product : productList) {
       %>
       <div class="product-card">
         <img src="<%= product.getImageUrl() %>" alt="<%= product.getName() %>" class="product-image">
         <h3 class="product-name"><%= product.getName() %></h3>
+        <p class="product-category">分类: <%= product.getCategory() %></p>
         <p class="product-price">价格: ¥<%= product.getPrice() %></p>
         <p class="product-stock">库存：<%= product.getStockQuantity() %>(单位：个)</p>
         <p class="product-description"><%= product.getDescription() %></p>
