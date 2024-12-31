@@ -3,6 +3,8 @@ package service;
 import bean.User;
 import dao.UserDao;
 
+import java.util.List;
+
 public class UserService {
 
     private UserDao userDao = new UserDao();
@@ -40,6 +42,11 @@ public class UserService {
         return false;
     }
 
+    // 获取全部用户
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
     // 获取用户信息
     public User getUserById(int userId) {
         return userDao.getUserById(userId);
@@ -59,6 +66,10 @@ public class UserService {
             return userDao.updateUser(user);
         }
         return false;
+    }
+
+    public boolean addUser(User user) {
+        return userDao.addUser(user);
     }
 }
 

@@ -209,14 +209,24 @@
       <ul>
         <%
           String userName = (String) session.getAttribute("userName");
+          String role = (String) session.getAttribute("role");
           if (userName == null) {
         %>
         <li><a href="/LoginView/login.jsp">登录</a></li>
         <%
+        } else if (role.equals("admin")) {
+        %>
+        <li><span>欢迎光临，<%= userName %>！</span></li>
+        <li><a href="cart.jsp">购物车</a></li>
+        <li><a href="orders.jsp">订单</a></li>
+        <li><a href="profile.jsp">个人设置</a></li>
+        <li><a href="/AdminView/index.jsp">管理端</a></li>
+        <li><a href="/LoginView/logout.jsp">退出登录</a></li>
+        <%
         } else {
         %>
         <li><span>欢迎光临，<%= userName %>！</span></li>
-        <li><a href="/MainView/cart.jsp">购物车</a></li>
+        <li><a href="cart.jsp">购物车</a></li>
         <li><a href="orders.jsp">订单</a></li>
         <li><a href="profile.jsp">个人设置</a></li>
         <li><a href="/LoginView/logout.jsp">退出登录</a></li>

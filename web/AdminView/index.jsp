@@ -54,6 +54,8 @@
     <a href="products/index.jsp" target="main_frame">商品管理</a>
     <a href="orders/index.jsp" target="main_frame">订单管理</a>
     <a href="users/index.jsp" target="main_frame">用户管理</a>
+    <a href="/MainView/index.jsp">商品销售首页</a>
+    <a href="/LoginView/logout.jsp">退出登录</a>
 </div>
 <div class="main-content">
     <iframe name="main_frame" src="products/index.jsp"></iframe>
