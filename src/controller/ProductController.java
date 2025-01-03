@@ -14,20 +14,6 @@ public class ProductController extends HttpServlet {
 
     private ProductService productService = new ProductService();
 
-    // 处理获取所有商品的请求
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String action = request.getParameter("action");
-//
-//        // 获取所有商品
-//        if ("all".equals(action)) {
-//            List<Product> productList = productService.getAllProducts();
-//            // 将商品列表添加到请求属性中
-//            request.setAttribute("productList", productList);
-//            // 转发到商品浏览页面
-//            request.getRequestDispatcher("/index.jsp").forward(request, response);
-//        }
-//    }
 
     // 处理商品请求
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

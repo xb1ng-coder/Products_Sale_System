@@ -69,6 +69,8 @@
         }
 
         form {
+            display: flex;
+            flex-direction: column;
             margin-top: 20px;
             text-align: center;
             padding: 20px;

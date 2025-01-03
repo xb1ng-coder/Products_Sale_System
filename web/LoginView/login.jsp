@@ -82,7 +82,7 @@
 <body>
 
 <div class="container">
-  <h1>登录到 商品销售系统</h1>
+  <h1>登录 - 商品销售系统</h1>
   <form action="/user?action=login" method="post">
     <label for="username">用户名：</label>
     <input type="text" id="username" name="username" required placeholder="请输入用户名">

@@ -35,13 +35,12 @@ public class OrderService {
         return orderDao.getAllOrders();
     }
 
-    // 获取某个订单的所有订单项
-
     // 获取某个用户的所有订单
     public List<Order> getOrdersByUserId(int userId) {
         return orderDao.getOrdersByUserId(userId);
     }
 
+    // 更新订单状态
     public boolean updateOrderStatus(int orderId, String status) {
         // 只有订单状态为 "pending" 或 "processing" 时，才能修改为 "completed" 或 "cancelled"
         Order order = orderDao.getOrderById(orderId);
@@ -50,17 +49,6 @@ public class OrderService {
         }
         return false;
     }
-
-    // 删除订单
-    public boolean deleteOrder(int orderId) {
-        // 删除订单前可以检查订单是否符合删除条件（比如：未付款、未完成）
-        Order order = orderDao.getOrderById(orderId);
-        if (order != null && order.getStatus().equals("pending")) {
-            return orderDao.deleteOrder(orderId);
-        }
-        return false;
-    }
-
     // 查询订单项
     public List<OrderItem> getOrderItemsByOrderId(int orderId) {
         OrderDao orderDao = new OrderDao();

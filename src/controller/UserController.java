@@ -39,6 +39,9 @@ public class UserController extends HttpServlet {
         if ("update".equals(action)) {
             doPostUpdate(request, response);
         }
+        if ("updateV2".equals(action)) {
+            doPostUpdateV2(request, response);
+        }
         if ("delete".equals(action)) {
             doPostDelete(request, response);
         }
@@ -99,17 +102,6 @@ public class UserController extends HttpServlet {
         }
     }
 
-    // 获取用户信息
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userIdStr = request.getParameter("userId");
-        if (userIdStr != null) {
-            int userId = Integer.parseInt(userIdStr);
-            User user = userService.getUserById(userId);
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/userProfile.jsp").forward(request, response);  // 返回用户资料页面
-        }
-    }
-
     // 更新用户信息
     protected void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
@@ -119,10 +111,6 @@ public class UserController extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
         String role = request.getParameter("role");
-
-        // 获取当前登录用户ID
-//        HttpSession session = request.getSession();
-//        int userId = (int) session.getAttribute("userId");
 
         User user = new User();
         user.setUserId(userId);
@@ -140,6 +128,38 @@ public class UserController extends HttpServlet {
         } else {
             request.setAttribute("errorMessage", "更新失败！");
             request.getRequestDispatcher("/AdminView/users/users_list.jsp").forward(request, response);  // 更新失败，返回用户资料页面
+        }
+    }
+
+    // 更新用户信息2--用户更新
+    protected void doPostUpdateV2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        String username = request.getParameter("userName");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String address = request.getParameter("address");
+        String role = request.getParameter("role");
+        if (role == null) {
+            role = "user";
+        }
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setAddress(address);
+        user.setRole(role);
+
+        // 调用UserService更新用户信息
+        boolean success = userService.updateUser(user);
+        if (success) {
+            response.sendRedirect("/MainView/index.jsp");  // 更新成功，跳转到用户资料页面
+        } else {
+            request.setAttribute("errorMessage", "更新失败！");
+            request.getRequestDispatcher("/MainView/index.jsp").forward(request, response);  // 更新失败，返回用户资料页面
         }
     }
 
@@ -173,29 +193,5 @@ public class UserController extends HttpServlet {
         }
     }
 
-    // 用户修改密码
-    protected void doPostChangePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String oldPassword = request.getParameter("oldPassword");
-        String newPassword = request.getParameter("newPassword");
-
-        // 获取当前登录用户ID
-        HttpSession session = request.getSession();
-        int userId = (int) session.getAttribute("userId");
-
-        boolean success = userService.changePassword(userId, oldPassword, newPassword);
-        if (success) {
-            response.sendRedirect("login.jsp");  // 修改密码成功，跳转到登录页面
-        } else {
-            request.setAttribute("errorMessage", "旧密码不正确！");
-            request.getRequestDispatcher("/changePassword.jsp").forward(request, response);  // 修改密码失败，返回修改页面
-        }
-    }
-
-    // 用户注销
-    protected void doPostLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.invalidate();  // 销毁session，注销用户
-        response.sendRedirect("index.jsp");  // 注销后跳转到首页
-    }
 }
 
